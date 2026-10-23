@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detection Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f0;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2e7d32;
+        }
+        img {
+            max-width: 250px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .result-item {
+            text-align: left;
+            background: #f1f8e9;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+        }
+        .top-result {
+            background: #c8e6c9;
+            font-weight: bold;
+        }
+        .error-box {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .treatment-box {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: left;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: white;
+            background-color: #2e7d32;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 Detection Result</h1>
+        <img src="{{ image_path }}" alt="Uploaded Leaf">
+
+        {% if error %}
+            <div class="error-box">
+                ⚠️ {{ error }}
+            </div>
+        {% else %}
+            <h3>Top 3 Predictions:</h3>
+            {% for class_name, confidence in results %}
+                <div class="result-item {% if loop.first %}top-result{% endif %}">
+                    {{ class_name }} — {{ confidence }}%
+                </div>
+            {% endfor %}
+
+            <div class="treatment-box">
+                <strong>💊 Treatment Suggestion:</strong><br>
+                {{ treatment }}
+            </div>
+        {% endif %}
+
+        <a href="/">Test Another Image</a>
+    </div>
+</body>
+</html>
